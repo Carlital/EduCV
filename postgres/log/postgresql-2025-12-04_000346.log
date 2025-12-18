@@ -1,0 +1,52 @@
+2025-12-04 00:03:46 -05 [1] user= db= LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 14.2.0) 14.2.0, 64-bit
+2025-12-04 00:03:46 -05 [1] user= db= LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2025-12-04 00:03:46 -05 [1] user= db= LOG:  listening on IPv6 address "::", port 5432
+2025-12-04 00:03:46 -05 [1] user= db= LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-04 00:03:46 -05 [30] user= db= LOG:  database system was shut down at 2025-12-04 00:03:39 -05
+2025-12-04 00:03:47 -05 [1] user= db= LOG:  database system is ready to accept connections
+2025-12-04 00:03:54 -05 [41] user=[unknown] db=[unknown] LOG:  connection received: host=[local]
+2025-12-04 00:03:54 -05 [41] user=odoo_prod db=fiedev LOG:  connection authorized: user=odoo_prod database=fiedev application_name=psql
+2025-12-04 00:04:16 -05 [41] user=odoo_prod db=fiedev LOG:  statement: UPDATE hr_employee SET name = 'Prueba Auditoria' WHERE id = 1;
+2025-12-04 00:04:26 -05 [41] user=odoo_prod db=fiedev LOG:  disconnection: session time: 0:00:31.858 user=odoo_prod database=fiedev host=[local]
+2025-12-04 00:04:29 -05 [44] user=[unknown] db=[unknown] LOG:  connection received: host=172.19.0.5 port=50522
+2025-12-04 00:04:29 -05 [44] user=odoo_prod db=postgres LOG:  connection authenticated: identity="odoo_prod" method=scram-sha-256 (/var/lib/postgresql/data/pg_hba.conf:100)
+2025-12-04 00:04:29 -05 [44] user=odoo_prod db=postgres LOG:  connection authorized: user=odoo_prod database=postgres application_name=odoo-1
+2025-12-04 00:08:46 -05 [28] user= db= LOG:  checkpoint starting: time
+2025-12-04 00:08:47 -05 [28] user= db= LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.126 s, sync=0.023 s, total=0.228 s; sync files=4, longest=0.008 s, average=0.006 s; distance=7 kB, estimate=7 kB
+2025-12-04 00:10:16 -05 [75] user=[unknown] db=[unknown] LOG:  connection received: host=[local]
+2025-12-04 00:10:16 -05 [75] user=odoo_prod db=fiedev LOG:  connection authorized: user=odoo_prod database=fiedev application_name=psql
+2025-12-04 00:10:32 -05 [75] user=odoo_prod db=fiedev LOG:  statement: CREATE TABLE hr_employee_audit (
+	  id SERIAL,
+	  usuario_id INT,
+	  old_value JSONB,
+	  new_value JSONB,
+	  modificado_por TEXT,
+	  fecha TIMESTAMP DEFAULT now()
+	);
+2025-12-04 00:11:28 -05 [75] user=odoo_prod db=fiedev LOG:  statement: CREATE OR REPLACE FUNCTION audit_employee()
+	RETURNS trigger AS $$
+	BEGIN
+	  INSERT INTO hr_employee_audit(usuario_id, old_value, new_value, modificado_por)
+	  VALUES (OLD.id, row_to_json(OLD), row_to_json(NEW), current_user);
+	  RETURN NEW;
+	END;
+	$$ LANGUAGE plpgsql;
+2025-12-04 00:11:58 -05 [75] user=odoo_prod db=fiedev LOG:  statement: CREATE TRIGGER audit_trigger
+	AFTER UPDATE ON hr_employee
+	FOR EACH ROW EXECUTE FUNCTION audit_employee();
+2025-12-04 00:12:38 -05 [75] user=odoo_prod db=fiedev LOG:  statement: UPDATE hr_employee
+	SET name = 'Docente Modificado Auditoria'
+	WHERE id = 3;
+2025-12-04 00:13:46 -05 [28] user= db= LOG:  checkpoint starting: time
+2025-12-04 00:13:51 -05 [28] user= db= LOG:  checkpoint complete: wrote 46 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=4.678 s, sync=0.081 s, total=4.879 s; sync files=35, longest=0.007 s, average=0.003 s; distance=228 kB, estimate=228 kB
+2025-12-04 00:20:47 -05 [108] user=[unknown] db=[unknown] LOG:  connection received: host=172.19.0.5 port=50334
+2025-12-04 00:20:47 -05 [108] user=odoo_prod db=fiedev LOG:  connection authenticated: identity="odoo_prod" method=scram-sha-256 (/var/lib/postgresql/data/pg_hba.conf:100)
+2025-12-04 00:20:47 -05 [108] user=odoo_prod db=fiedev LOG:  connection authorized: user=odoo_prod database=fiedev application_name=odoo-1
+2025-12-04 00:20:47 -05 [108] user=odoo_prod db=fiedev LOG:  statement: UPDATE "bus_presence" SET "status" = 'offline' WHERE id IN (64)
+2025-12-04 00:20:47 -05 [108] user=odoo_prod db=fiedev LOG:  statement: INSERT INTO "bus_bus" ("channel", "create_date", "create_uid", "message", "write_date", "write_uid") VALUES ('["fiedev","res.partner",3,"presence"]', '2025-12-04 05:20:47.401558', 2, '{"type":"bus.bus/im_status_updated","payload":{"presence_status":"offline","im_status":"offline","partner_id":3}}', '2025-12-04 05:20:47.401558', 2) RETURNING "id"
+2025-12-04 00:20:47 -05 [110] user=[unknown] db=[unknown] LOG:  connection received: host=172.19.0.5 port=50336
+2025-12-04 00:20:47 -05 [110] user=odoo_prod db=postgres LOG:  connection authenticated: identity="odoo_prod" method=scram-sha-256 (/var/lib/postgresql/data/pg_hba.conf:100)
+2025-12-04 00:20:47 -05 [110] user=odoo_prod db=postgres LOG:  connection authorized: user=odoo_prod database=postgres application_name=odoo-1
+2025-12-04 00:20:47 -05 [110] user=odoo_prod db=postgres LOG:  disconnection: session time: 0:00:00.213 user=odoo_prod database=postgres host=172.19.0.5 port=50336
+2025-12-04 00:23:46 -05 [28] user= db= LOG:  checkpoint starting: time
+2025-12-04 00:23:47 -05 [28] user= db= LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.546 s, sync=0.017 s, total=0.659 s; sync files=6, longest=0.005 s, average=0.003 s; distance=12 kB, estimate=207 kB

@@ -1,0 +1,23 @@
+2025-12-04 00:00:23 -05 [64] user=odoo_prod db=fiedev LOG:  disconnection: session time: 0:02:33.637 user=odoo_prod database=fiedev host=[local]
+2025-12-04 00:00:51 -05 [80] user=[unknown] db=[unknown] LOG:  connection received: host=[local]
+2025-12-04 00:00:51 -05 [80] user=odoo_prod db=fiedev LOG:  connection authorized: user=odoo_prod database=fiedev application_name=psql
+2025-12-04 00:00:57 -05 [80] user=odoo_prod db=fiedev LOG:  statement: UPDATE hr_employee SET name = 'Prueba Auditoria' WHERE id = 1;
+2025-12-04 00:02:53 -05 [80] user=odoo_prod db=fiedev LOG:  disconnection: session time: 0:02:02.629 user=odoo_prod database=fiedev host=[local]
+2025-12-04 00:03:05 -05 [95] user=[unknown] db=[unknown] LOG:  connection received: host=[local]
+2025-12-04 00:03:05 -05 [95] user=odoo_prod db=fiedev LOG:  connection authorized: user=odoo_prod database=fiedev application_name=psql
+2025-12-04 00:03:09 -05 [95] user=odoo_prod db=fiedev LOG:  statement: ALTER SYSTEM SET logging_collector = 'on';
+2025-12-04 00:03:09 -05 [95] user=odoo_prod db=fiedev LOG:  statement: ALTER SYSTEM SET log_connections = 'on';
+2025-12-04 00:03:09 -05 [95] user=odoo_prod db=fiedev LOG:  statement: ALTER SYSTEM SET log_disconnections = 'on';
+2025-12-04 00:03:09 -05 [95] user=odoo_prod db=fiedev LOG:  statement: ALTER SYSTEM SET log_statement = 'mod';
+2025-12-04 00:03:09 -05 [95] user=odoo_prod db=fiedev LOG:  statement: ALTER SYSTEM SET log_line_prefix = '%t [%p] user=%u db=%d ';
+2025-12-04 00:03:09 -05 [1] user= db= LOG:  received SIGHUP, reloading configuration files
+2025-12-04 00:03:18 -05 [95] user=odoo_prod db=fiedev LOG:  disconnection: session time: 0:00:12.785 user=odoo_prod database=fiedev host=[local]
+2025-12-04 00:03:38 -05 [1] user= db= LOG:  received fast shutdown request
+2025-12-04 00:03:38 -05 [1] user= db= LOG:  aborting any active transactions
+2025-12-04 00:03:38 -05 [43]: [4-1] user=odoo_prod db=postgres FATAL:  terminating connection due to administrator command
+2025-12-04 00:03:38 -05 [43]: [5-1] user=odoo_prod db=postgres LOG:  disconnection: session time: 0:09:15.472 user=odoo_prod database=postgres host=172.19.0.5 port=49360
+2025-12-04 00:03:38 -05 [1] user= db= LOG:  background worker "logical replication launcher" (PID 33) exited with exit code 1
+2025-12-04 00:03:38 -05 [28] user= db= LOG:  shutting down
+2025-12-04 00:03:38 -05 [28] user= db= LOG:  checkpoint starting: shutdown immediate
+2025-12-04 00:03:39 -05 [28] user= db= LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.017 s, sync=0.007 s, total=0.064 s; sync files=3, longest=0.004 s, average=0.003 s; distance=7 kB, estimate=7 kB
+2025-12-04 00:03:39 -05 [1] user= db= LOG:  database system is shut down
